@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flourish API: Simple navigation example</title>
+    <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+    <script src="https://d3js.org/d3-fetch.v1.min.js"></script>
+    <script src="https://cdn.flourish.rocks/flourish-live-v4.min.js"></script>
+    <script src="https://kit.fontawesome.com/c39146d022.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <nav>
+      <div class="navigation">
+        <div class="steppers">
+          <button id="fl-prev"><i class="fas fa-arrow-left"></i></button>
+          <button id="fl-next"><i class="fas fa-arrow-right"></i></button>
+        </div>
+        <div class="count">
+            <span id="current"></span>
+            <span id="total"></span>
+        </div>
+      </div>
+      <div class="captions">
+      </div>
+    </nav>
+    <div id="chart"></div>
+
+    <script>
+      // First we create a new visualization.
+      var story = new Flourish.Live({
+        "template": "@flourish/line-bar-pie",
+        "version": "20.4.6",
+        "api_key": "YOUR API KEY GOES HERE",
+        "container": "#chart",
+        "bindings": {
+          "data": {
+            "label": "Year",
+            "metadata": [],
+            "value": [ "Column 1", "Column 2", "Column 3", "Column 4" ]
+          }
+        },
+
+        // In this case we're passing in the data here at the beginning, since it's the same data in each slide, but you could just as easily have different data in each slide
+        "data": {
+          "data": [
+            { "Year": "2009", "Column 1": "36200", "Column 2": "27200", "Column 3": "26200", "Column 4": "17200" },
+            { "Year": "2010", "Column 1": "36600", "Column 2": "27800", "Column 3": "26600", "Column 4": "17800" },
+            { "Year": "2011", "Column 1": "37500", "Column 2": "28500", "Column 3": "27500", "Column 4": "18500" },
+            { "Year": "2012", "Column 1": "38700", "Column 2": "29400", "Column 3": "28700", "Column 4": "19400" },
+            { "Year": "2013", "Column 1": "39600", "Column 2": "30200", "Column 3": "29600", "Column 4": "10200" },
+            { "Year": "2014", "Column 1": "40500", "Column 2": "30900", "Column 3": "20500", "Column 4": "10900" },
+            { "Year": "2015", "Column 1": "41200", "Column 2": "31500", "Column 3": "21200", "Column 4": "11500" },
+            { "Year": "2016", "Column 1": "41803", "Column 2": "31931", "Column 3": "21803", "Column 4": "11931" },
+            { "Year": "2017", "Column 1": "42600", "Column 2": "32600", "Column 3": "22600", "Column 4": "12600" }
+          ]
+        }
+      })
+
+      // Create an array of slides. We'll move between these when the user clicks forward and back
+      var slides = [
+        {
+          "state": { "facet_layout": "single", "chart_type": "line" }, // Single line chart
+        },
+        {
+          "state": { "facet_layout": "single", "chart_type": "area_stacked" }, // Single stacked area chart
+        },
+        {
+          "state": { "facet_layout": "facets", "chart_type": "column_stacked" }, //Stacked column grid of charts
+        }
+      ];
+
+      // Add some JS to make the controls work
+      let current_slide = 0;
+      const prev = document.getElementById("fl-prev")
+      const next = document.getElementById("fl-next")
+
+      //Listener on previous button: if current slide is greater than 0, when clicked decrease current_slide by 1
+      prev.addEventListener("click", function() { 
+        if (current_slide > 0) current_slide--;
+        updateStory();
+      });
+
+      //Listener on previous button: if current slide is less than (slides length -1) when clicked increase current_slide by 1
+      next.addEventListener("click", function() {
+        if (current_slide < slides.length - 1) current_slide++;
+        updateStory();
+      });
+
+      // Update function on story (Flourish viz) called after any button press to change current slide
+      function updateStory() {
+        story.update(slides[current_slide]);
+      }
+      updateStory();
+
+      // Add captions for each slide (each caption in this array matches the position of the visualization in the slides array)
+      var captions_text = [
+        "This slide shows a <strong>single line chart</strong>...", 
+        "whereas this one is a <strong>stacked area chart</strong>...", 
+        "and finally this one is a <strong>stacked column grid of charts</strong>."
+      ]
+
+      // Navigation button styling & slide count
+      const steppers = document.querySelector(".steppers");
+      const current_count = document.getElementById("current");
+      const total_count = document.getElementById("total");
+      const captions = document.querySelector(".captions");
+
+      // Set initial button styling & slide count
+      prev.disabled = true;
+      current_count.innerText = current_slide + 1;
+      total_count.innerText = "of " + slides.length;
+      captions.innerHTML = captions_text[current_slide]
+
+      // Update button styling & slide count on click of buttons
+      steppers.addEventListener("click", function(){
+        current_slide == 0 ? prev.disabled = true : prev.disabled = false;
+        current_slide == (slides.length - 1) ? next.disabled = true : next.disabled = false;
+        current_count.innerText = current_slide + 1;
+        total_count.innerText = "of " + slides.length;
+        captions.innerHTML = captions_text[current_slide]
+      });
+    </script>
+  </body>
+</html>
