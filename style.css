@@ -1,62 +1,64 @@
 body {
-	box-sizing: border-box;
-	font-family: "Lato",sans-serif;
+  box-sizing: border-box;
+  font-family: Inter, sans-serif;
 }
 
 nav {
-	display: flex;
-	border: 1px solid #fff;
-	border-bottom-color: #eee;
+  display: flex;
+  border: 1px solid #fff;
+  border-bottom-color: #eee;
 }
 
 .captions {
-	padding: 10px 0 10px 20px;
-	font-size: 1.1em;
+  padding: 10px 0 10px 20px;
+  font-size: 1.1em;
 }
 
 button {
-	appearance: none;
-	outline: none;
-	display: inline-block;
-	position: relative;
-	transition: background 200ms,color 200ms;
-	border-radius: 9999px;
-	width: 1.6em;
-	height: 1.6em;
-	margin: 0 1px 0;
-	vertical-align: middle;
-	cursor: pointer;
-	border: 1px solid transparent;
+  appearance: none;
+  outline: none;
+  display: inline-block;
+  position: relative;
+  transition: background 200ms, color 200ms;
+  border-radius: 9999px;
+  width: 1.6em;
+  height: 1.6em;
+  margin: 0 1px 0;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
 }
 
-#fl-prev, #fl-next {
-	background: #333;
-	color: #fff;
+#fl-prev,
+#fl-next {
+  background: #333;
+  color: #fff;
 }
 
 #fl-prev {
-	font-size: 1em;
+  font-size: 1em;
 }
 
 #fl-next {
-	font-size: 1.8em;
+  font-size: 1.8em;
 }
 
-#fl-prev:disabled, #fl-next:disabled{
-	background: transparent;
-	border-color: #ccc;
-	color: #ccc;
-	cursor: default;
+#fl-prev:disabled,
+#fl-next:disabled {
+  background: transparent;
+  border-color: #ccc;
+  color: #ccc;
+  cursor: default;
 }
 
-
-#fl-prev:hover:not([disabled]), #fl-next:hover:not([disabled]){
-	opacity: 0.7
+#fl-prev:hover:not([disabled]),
+#fl-next:hover:not([disabled]) {
+  opacity: 0.7;
 }
 
 .count {
-	color: #333;
-	font-weight: bold;
-	font-size: 0.8em;
-	padding: 5px;
+  color: #333;
+  font-weight: bold;
+  font-size: 0.8em;
+  padding: 5px;
 }
